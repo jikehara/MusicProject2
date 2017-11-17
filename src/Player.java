@@ -1,37 +1,22 @@
-
-/**
- * Class pulled from Nate Williams: https://github.com/YogoGit/JuiceBottler
- * 
- * @author Joseph Ikehara significant changes made by Joseph, but there is still
- *         some of Nate's code ~ 70% my code Some edits from Nate Williams
- */
-
 public class Player implements Runnable {
 
 	private final Tone tone;
-	private final BellNote bellNote;
-	private volatile boolean timeToPlay;
+	private final String noteName;
+	private volatile boolean isPlaying = false;
 	private Thread t;
+	Mutex m = new Mutex();
 
 	/**
-	 * constructor assigns a player to a note and 
+	 * constructor assigns a player to a note
 	 * 
 	 * @param plant
 	 * @param os
 	 */
-	public Player(BellNote bellNote, Tone tone) {
-		this.bellNote = bellNote;
+	public Player(String noteName, Tone tone) {
+		this.noteName = noteName;
 		this.tone = tone;
-		setTimeToPlay(true);
 		t = new Thread(this);
 		t.start();
-	}
-
-	/**
-	 * should end the run() method
-	 */
-	public void stopPlayer() {
-		setTimeToPlay(false);
 	}
 
 	/**
@@ -46,29 +31,17 @@ public class Player implements Runnable {
 	}
 
 	/**
-	 * check whether the program is running or not
-	 * 
-	 * @return
-	 */
-	public boolean isTimeToWork() {
-		return timeToPlay;
-	}
-
-	/**
 	 * begin or end note for the player
 	 * 
 	 * @param boolean timeToPlay
 	 */
-	public void setTimeToPlay(boolean timeToPlay) {
-		this.timeToPlay = timeToPlay;
+	public void setPlaying() {
+		this.isPlaying = !isPlaying;
 	}
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		while(timeToPlay) {
-			playNote();
-		}
+		
 	}
 
 	private void playNote() {

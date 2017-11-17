@@ -42,13 +42,21 @@ public class Tone {
 				String line = null;
 				while ((line = br.readLine()) != null) {
 					String[] noteInfo = line.split(" ");// read note and note length
-					String n = noteInfo[0]; // note name
-					String nl = noteInfo[1]; // note length as string
-					if (noteInfo.length != 2) {
+					// primitive error checking - resolves improper input amount and input type.
+					String n;
+					String nl;
+					if (noteInfo.length > 2) {
 						System.out.println("Too many inputs on this line.");
 					}
-					nl = formatNoteLength(nl);
-					System.out.println(n+" "+nl);
+					if (noteInfo.length < 2) {
+						System.out.println("Not enough input on line, defaulting to quarter rest");
+						n = "REST";
+						nl = "QUARTER";
+					} else {
+						n = formatNoteName(noteInfo[0]); // note name
+						nl = formatNoteLength(noteInfo[1]); // note length as string
+					}			
+					System.out.println(n + " " + nl);
 					notes.add(new BellNote(Note.valueOf(n), NoteLength.valueOf(nl)));// add note to the song
 				}
 			} catch (IOException ignored) {
@@ -68,6 +76,11 @@ public class Tone {
 		this.af = af;
 	}
 
+	/**
+	 * @author Nate Williams
+	 * @param song
+	 * @throws LineUnavailableException
+	 */
 	void playSong(List<BellNote> song) throws LineUnavailableException {
 		try (final SourceDataLine line = AudioSystem.getSourceDataLine(af)) {
 			line.open();
@@ -104,7 +117,7 @@ public class Tone {
 	 * @return
 	 */
 	private static String formatNoteLength(String length) {
-		String properLength = "WHOLE"; // default to whole note
+		String properLength = "HALF"; // default to half note
 		// System.out.println(length);
 		switch (length) {
 		case "8":
@@ -119,9 +132,74 @@ public class Tone {
 		case "1":
 			properLength = "WHOLE";
 			break;
+		default:
+			System.out.println("Bad note length, default to HALF");
+			break;
 		}
 		return properLength;
 	}
+
+	/**
+	 * Checks note name, defaults incorrect notes to A4
+	 * @param name
+	 * @return
+	 */
+	private static String formatNoteName(String name) {
+		String properName = "REST"; // default to REST
+		switch (name) {
+		case "A4":
+			properName = name;
+			break;
+		case "A4S":
+			properName = name;
+			break;
+		case "B4":
+			properName = name;
+			break;
+		case "C4":
+			properName = name;
+			break;
+		case "C4S":
+			properName = name;
+			break;
+		case "D4":
+			properName = name;
+			break;
+		case "D4S":
+			properName = name;
+			break;
+		case "E4":
+			properName = name;
+			break;
+		case "F4":
+			properName = name;
+			break;
+		case "F4S":
+			properName = name;
+			break;
+		case "G4":
+			properName = name;
+			break;
+		case "G4S":
+			properName = name;
+			break;
+		case "A5":
+			properName = name;
+			break;
+		case "REST":
+			properName = name;
+			break;
+		default:
+			System.out.println("Bad note name, default to REST");
+			break;
+		}
+		return properName;
+	}
+	
+//	private Player addPlayer(String note){
+//		return null;
+//		
+//	}
 }
 
 /**
