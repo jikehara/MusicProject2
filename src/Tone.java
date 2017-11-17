@@ -55,7 +55,7 @@ public class Tone {
 					} else {
 						n = formatNoteName(noteInfo[0]); // note name
 						nl = formatNoteLength(noteInfo[1]); // note length as string
-					}			
+					}
 					System.out.println(n + " " + nl);
 					notes.add(new BellNote(Note.valueOf(n), NoteLength.valueOf(nl)));// add note to the song
 				}
@@ -141,6 +141,7 @@ public class Tone {
 
 	/**
 	 * Checks note name, defaults incorrect notes to A4
+	 * 
 	 * @param name
 	 * @return
 	 */
@@ -195,11 +196,11 @@ public class Tone {
 		}
 		return properName;
 	}
-	
-//	private Player addPlayer(String note){
-//		return null;
-//		
-//	}
+
+	// private Player addPlayer(String note){
+	// return null;
+	//
+	// }
 }
 
 /**
