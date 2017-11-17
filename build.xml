@@ -1,0 +1,37 @@
+<project name="MusicProject" default="compile" basedir=".">
+	<!--  set global properties for this build  -->
+	<property name="src" location="src" />
+	<property name="dist" location="dist" />
+
+	<target name="init">
+		<mkdir dir="${dist}" />
+		<mkdir dir="${dist}/classes" />
+	</target>
+
+	<target name="compile" depends="init">
+		<javac includeantruntime="false" srcdir="${src}" destdir="${dist}/classes" debug="true"/>
+	</target>
+
+	<target name="jar" depends="init,compile">
+		<jar destfile="${dist}/${ant.project.name}.jar" basedir="${dist}/classes">
+			<manifest>
+				<attribute name="Main-Class" value="Tone" />
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="run" depends="songarg">
+		<java jar="${dist}/${ant.project.name}.jar" fork="true">
+			<arg value="${song}"/>
+		</java>
+	</target>
+
+	<target name="songarg" unless="song">
+		<property name="song" value="${basedir}/MaryHadALittleLamb.txt" />
+	</target>
+
+	<target name="clean">
+		<delete dir="${dist}" />
+	</target>
+
+</project>
