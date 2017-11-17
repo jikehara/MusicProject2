@@ -1,4 +1,4 @@
-package musicProject;
+
 /**
  * Class pulled from Nate Williams: https://github.com/YogoGit/JuiceBottler
  * 
