@@ -196,11 +196,6 @@ public class Tone {
 		}
 		return properName;
 	}
-
-	// private Player addPlayer(String note){
-	// return null;
-	//
-	// }
 }
 
 /**
